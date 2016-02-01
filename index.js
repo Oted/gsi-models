@@ -45,7 +45,7 @@ Models.prototype.connect = function(options, done) {
 
         internals.connected = true;
 
-        Fs.readdirSync('./models').filter(function(model) {
+        Fs.readdirSync(__dirname + '/models').filter(function(model) {
             return model.split('.').pop() === "js";
         }).map(function(model) {
             that.model[model.split('.').shift()] = require('./models/' + model).call(that, Mongoose);
