@@ -8,7 +8,8 @@ module.exports = function(Mongoose) {
         string  : { type : String, required : true },
         count  : { type : Number, required : true },
         total  : { type : Number, required : true },
-        median : { type : Number }
+        median : { type : Number },
+        score : { type : Number }
     }).plugin(require('mongoose-times'));
 
     return Mongoose.model('TitleFragment', itemSchema);
