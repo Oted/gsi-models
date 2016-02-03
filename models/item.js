@@ -21,7 +21,7 @@ module.exports = function(Mongoose) {
         scraped     : { type : Boolean, default : false },
         enabled     : { type : Boolean, default : true },
         view_time   : { type : Number, default : 0 },
-        fragment    : { type : Mongoose.Schema.ObjectId }
+        fragments   : { type : Array, default : [] }
     }).plugin(require('mongoose-times'));
 
     return Mongoose.model('Item', itemSchema);
