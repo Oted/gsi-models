@@ -20,7 +20,8 @@ module.exports = function(Mongoose) {
         sfw         : { type : Boolean, default : true },
         scraped     : { type : Boolean, default : false },
         enabled     : { type : Boolean, default : true },
-        view_time   : { type : Number, default : 0 } //view time on item in milliseconds
+        view_time   : { type : Number, default : 0 },
+        fragment    : { type : Schema.ObjectId}
     }).plugin(require('mongoose-times'));
 
     return Mongoose.model('Item', itemSchema);
