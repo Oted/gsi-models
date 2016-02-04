@@ -40,7 +40,7 @@ Models.prototype.connect = function(options, done) {
 
     Mongoose.connect(options.url || process.env.MONGO_URL, function (err, res) {
         if (err) {
-            throw err;
+            return done(err);
         }
 
         internals.connected = true;
@@ -62,7 +62,4 @@ Models.prototype.getItemTypes = function() {
     return internals['item_types'];
 };
 
-
-//Models.prototype.Mongoose = Mongoose;
-
-module.exports = Models;
+module.exports = new Models();
