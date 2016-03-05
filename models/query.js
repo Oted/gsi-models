@@ -6,10 +6,13 @@ module.exports = function(Mongoose) {
 
     var itemSchema = new Mongoose.Schema({
         title       : { type : String},
-        type        : { type: String, enum: ['trending', 'custom', 'user', 'tag']},
+        _hash       : { type : String, unique : true },
+        type        : { type: String },
         query       : { type : Mongoose.Schema.Types.Mixed, required : 'query is required.'},
         owner       : { type : String},
-        enabled     : { type : Boolean, default : true}
+        enabled     : { type : Boolean, default : true},
+        queried     : { type : Number, default : 0},
+        results     : { type : Number, default : 0}
     }).plugin(require('mongoose-times'));
 
     return Mongoose.model('Query', itemSchema);
