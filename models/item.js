@@ -23,7 +23,8 @@ module.exports = function(Mongoose) {
         enabled     : { type : Boolean, default : true },
         views       : { type : Number, default : 0 },
         fragments   : { type : Array, default : [] },
-        height      : { type : Number }
+        dimesions   : { type : Mongoose.Schema.Types.Mixed },
+        creator     : { type : String, lowercase : true }
     }).plugin(require('mongoose-times'));
 
     return Mongoose.model('Item', itemSchema);
