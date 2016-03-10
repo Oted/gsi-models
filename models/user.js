@@ -4,8 +4,8 @@
 module.exports = function(Mongoose) {
     var that = this;
 
-    var itemSchema = new Mongoose.Schema({  
-        token       : { type : String, required : true},
+    var itemSchema = new Mongoose.Schema({
+        token       : { type : String, required : true, unique : true},
         email       : { type : String, default : null},
         ip          : { type : String, required : true},
         fetches     : { type : Number, default : 0},

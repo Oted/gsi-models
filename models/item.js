@@ -6,7 +6,7 @@ module.exports = function(Mongoose) {
 
     var itemSchema = new Mongoose.Schema({
         _hash       : { type : String, unique : true },
-        _sort       : { type : String, required : true },
+        _sort       : { type : Number, required : true },
         title       : { type : String },
         search      : { type : String, lowercase: true, trim: true },
         source      : { type : String },
