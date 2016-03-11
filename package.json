@@ -19,8 +19,8 @@
   "dependencies": {
     "async": "^1.5.2",
     "dotenv": "^2.0.0",
-    "joi": "^7.2.3",
-    "mongoose": "^4.3.7",
+    "joi": "^8.0.4",
+    "mongoose": "^4.4.6",
     "mongoose-times": "^0.1.0",
     "request": "^2.69.0",
     "trello": "^0.5.1"
