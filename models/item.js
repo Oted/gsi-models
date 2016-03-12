@@ -44,9 +44,9 @@ module.exports = function(Mongoose) {
 };
 
 //curl -XPOST 'localhost:9200/customer/external/1/_update?pretty'
-internals.updateIntoElastic = function (item, done) {
+internals.updateIntoElastic = function (item, next) {
     if (!item || !item.enabled) {
-        return done(null, item);
+        return next(null, item);
     }
 
     var elasticSearchObject = {
@@ -58,17 +58,17 @@ internals.updateIntoElastic = function (item, done) {
 
     return Elastic.index(elasticSearchObject, function (err) {
         if (err) {
-            return done(err);
+            return next(err);
         }
 
-        return done(null, item);
+        return next(null, item);
     });
 };
 
 //curl -XPOST 'localhost:9200/customer/external/1/'
-internals.indexIntoElastic = function (item, done) {
+internals.indexIntoElastic = function (item, next) {
     if (!item || !item.enabled) {
-        return done(null, item);
+        return next(null, item);
     }
 
     var body = item.toObject();
