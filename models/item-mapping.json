@@ -1,0 +1,199 @@
+{
+  "query": {
+    "query": {
+      "bool": {
+        "must": [],
+        "must_not": [],
+        "should": [],
+        "filter": {
+          "bool": {
+            "must": [
+              {
+                "term": {
+                  "enabled": true
+                }
+              },
+              {
+                "terms": {
+                  "types": [
+                    "gif",
+                    "img"
+                  ]
+                }
+              },
+              {
+                "range": {
+                  "_sort": {
+                    "gte": 42352,
+                    "lte": 54264
+                  }
+                }
+              },
+              {
+                "simple_query_string": {
+                  "query": "\"fried eggs\" +(eggplant | potato) -frittata",
+                  "analyzer": "snowball",
+                  "fields": [
+                    "body^5",
+                    "_all"
+                  ],
+                  "default_operator": "and"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "sort": "_sort",
+    "size": 3,
+    "_source": {
+      "exclude": [
+        "suggest",
+        "pid",
+        "primary_category",
+        "secondary_category",
+        "region",
+        "interactions"
+      ]
+    }
+  }
+}
+
+{
+  "settings": {
+    "number_of_shards": 4,
+    "number_of_replicas": 0,
+    "analysis": {
+      "analyzer": {
+        "case_insensitive_sort": {
+          "tokenizer": "keyword",
+          "filter": [
+            "lowercase"
+          ]
+        },
+        "lowercase_with_stopwords": {
+          "type": "custom",
+          "tokenizer": "lowercase",
+          "filter": [
+            "source_stop"
+          ]
+        }
+      },
+      "filter": {
+        "source_stop": {
+          "type": "stop",
+          "stopwords": [
+            "http",
+            "https",
+            ".jpg",
+            ".gif",
+            "www",
+            ".gifv"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "items": {
+      "dynamic": "false",
+      "properties": {
+        "created": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "lastUpdated": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "_hash": {
+          "type": "string",
+          "index": "not_analyzed",
+          "include_in_all": false
+        },
+        "_sort": {
+          "type": "date"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "analyzer": "snowball",
+          "fields": {
+            "raw": {
+              "type": "string",
+              "index": "not_analyzed",
+              "analyzer": "case_insensitive_sort"
+            }
+          }
+        },
+        "source": {
+          "type": "string",
+          "analyzer": "lowercase_with_stopwords"
+        },
+        "type": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "data": {
+          "type": "string",
+          "index": "no"
+        },
+        "dimensions": {
+          "properties": {
+            "width": {
+              "type": "long",
+              "index": "no"
+            },
+            "heigth": {
+              "type": "long",
+              "index": "no"
+            }
+          }
+        },
+        "author": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "fragments": {
+          "type": "completion",
+          "analyzer": "simple",
+          "search_analyzer": "simple"
+        },
+        "likes": {
+          "type": "long",
+          "index": "no"
+        },
+        "score": {
+          "type": "long",
+          "index": "no"
+        },
+        "scraped": {
+          "type": "boolean",
+          "index": "no"
+        },
+        "sfw": {
+          "type": "boolean"
+        },
+        "source_type": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "views": {
+          "type": "long",
+          "index": "no"
+        },
+        "dislikes": {
+          "type": "long",
+          "index": "no"
+        },
+        "ip": {
+          "type": "string",
+          "index": "no"
+        }
+      }
+    }
+  }
+}

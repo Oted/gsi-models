@@ -5,17 +5,17 @@ var Fs          = require('fs');
 var internals = {
     'connected' : false,
     'item_types' : [
-        'youtube', 
-        'img', 
-        'gif', 
-        'soundcloud', 
-        'vimeo', 
-        'vine', 
-        'text', 
-        'video', 
-        'twitch', 
-        'instagram', 
-        'sound', 
+        'youtube',
+        'img',
+        'gif',
+        'soundcloud',
+        'vimeo',
+        'vine',
+        'text',
+        'video',
+        'twitch',
+        'instagram',
+        'sound',
         'other'
     ]
 };
@@ -32,6 +32,10 @@ function Models() {
  */
 Models.prototype.connect = function(options, done) {
     var that = this;
+
+    if (!process.env.ELASTIC_URL) {
+        throw new Error('No elastic url found in .env');
+    }
 
     if (typeof options === "function") {
         done = options;
@@ -50,7 +54,7 @@ Models.prototype.connect = function(options, done) {
         }).map(function(model) {
             that.model[model.split('.').shift()] = require('./models/' + model).call(that, Mongoose);
         });
-        
+
         return done();
     });
 };
