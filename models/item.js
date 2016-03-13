@@ -23,7 +23,7 @@ module.exports = function(Mongoose) {
         likes       : { type : Number, default : 0 },
         dislikes    : { type : Number, default : 0 },
         ip          : { type : String, default : null },
-        token       : { type : String, default : null },
+        _token      : { type : String, default : null },
         source_type : { type : String, default : 'none' },
         sfw         : { type : Boolean, default : true },
         scraped     : { type : Boolean, default : false },
@@ -40,35 +40,19 @@ module.exports = function(Mongoose) {
     //needs to be pre here bcs mongoose
     itemSchema.pre('update', internals.updateIntoElastic);
 
+    //on remove
+    itemSchema.post('remove', internals.deleteFromElastic);
+
     return Mongoose.model('Item', itemSchema);
 };
 
-//curl -XPOST 'localhost:9200/customer/external/1/_update?pretty'
-internals.updateIntoElastic = function (item, next) {
-    if (!item || !item.enabled) {
+internals.indexIntoElastic = function (item, next) {
+    if (!item) {
         return next(null, item);
     }
 
-    var elasticSearchObject = {
-        index: 'gsi',
-        type: 'items',
-        id : item._id,
-        body: item
-    };
-
-    return Elastic.index(elasticSearchObject, function (err) {
-        if (err) {
-            return next(err);
-        }
-
-        return next(null, item);
-    });
-};
-
-//curl -XPOST 'localhost:9200/customer/external/1/'
-internals.indexIntoElastic = function (item, next) {
-    if (!item || !item.enabled) {
-        return next(null, item);
+    if (item.enabled === false) {
+        return internals.deleteFromElastic(item, next);
     }
 
     var body = item.toObject();
@@ -92,3 +76,47 @@ internals.indexIntoElastic = function (item, next) {
         return next(null, item);
     });
 };
+
+internals.updateIntoElastic = function (item, next) {
+    if (!item) {
+        return next(null, item);
+    }
+
+    if (item.enabled === false) {
+        return internals.deleteFromElastic(item, next);
+    }
+
+    var elasticSearchObject = {
+        index: 'gsi',
+        type: 'items',
+        id : item._id,
+        body: item
+    };
+
+    return Elastic.index(elasticSearchObject, function (err) {
+        if (err) {
+            return next(err);
+        }
+
+        return next(null, item);
+    });
+};
+
+internals.deleteFromElastic = function (item, next) {
+    var elasticSearchObject = {
+        index: 'gsi',
+        type: 'items',
+        id : item._id.toString()
+    };
+
+    return Elastic.delete(elasticSearchObject, function (err) {
+        if (err) {
+            return next(err);
+        }
+
+        return next(null, item);
+    });
+};
+
+
+
