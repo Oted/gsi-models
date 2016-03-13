@@ -9,7 +9,7 @@ module.exports = function(Mongoose) {
         fetches : { type : Number, default : 0 },
         visits  : { type : Number, default : 1 },
         queries : { type : Array, default : [] },
-        name    : { type : String, default 'user' }
+        name    : { type : String, default : 'user' }
     });
 
     return Mongoose.model('User', itemSchema);
