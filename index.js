@@ -13,13 +13,20 @@ var internals = {
         'gif',
         'soundcloud',
         'vimeo',
-        'vine',
         'text',
         'video',
         'twitch',
-        'instagram',
         'sound',
         'other'
+    ],
+    'category_types' : [
+        'documentary',
+        'sport',
+        'music',
+        'art',
+        'amusing',
+        'creepy',
+        'news'
     ]
 };
 
@@ -74,6 +81,13 @@ Models.prototype.searchItems = function (query, done) {
         index: 'gsi',
         body: query
     }, done);
+};
+
+/**
+ *  Get the used categories
+ */
+Models.prototype.getItemCategories = function() {
+    return internals['item_types'];
 };
 
 /**
