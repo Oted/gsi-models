@@ -9,6 +9,7 @@ module.exports = function(Mongoose) {
         _hash       : { type : String, unique : true },
         type        : { type: String },
         query       : { type : Mongoose.Schema.Types.Mixed, required : 'query is required.'},
+        es_query    : { type : Mongoose.Schema.Types.Mixed, required : 'es_query is required.'},
         owner       : { type : String },
         enabled     : { type : Boolean, default : true },
         queried     : { type : Number, default : 0 },
