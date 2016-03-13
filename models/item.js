@@ -1,16 +1,12 @@
-var ElasticSearch   = require('elasticsearch');
-
-var Elastic = new ElasticSearch.Client({
-    host: process.env.ELASTIC_URL
-});
 
 var internals = {};
 
 /**
  *  The item model this is an extension of the Models object
  */
-module.exports = function(Mongoose) {
+module.exports = function(Mongoose, elastic) {
     var that = this;
+    Elastic = elastic;
 
     var itemSchema = new Mongoose.Schema({
         _hash       : { type : String, unique : true },

@@ -1,6 +1,9 @@
-var Mongoose    = require('mongoose');
-var Utils       = require('./lib/utils.js');
-var Fs          = require('fs');
+var Mongoose        = require('mongoose');
+var Utils           = require('./lib/utils.js');
+var Fs              = require('fs');
+var ElasticSearch   = require('elasticsearch');
+
+var Elastic;
 
 var internals = {
     'connected' : false,
@@ -42,21 +45,35 @@ Models.prototype.connect = function(options, done) {
         options = {};
     }
 
-    Mongoose.connect(options.url || process.env.MONGO_URL, function (err, res) {
+    return Mongoose.connect(options.url || process.env.MONGO_URL, function (err, res) {
         if (err) {
             return done(err);
         }
 
         internals.connected = true;
 
+        Elastic = new ElasticSearch.Client({
+            host: process.env.ELASTIC_URL
+        });
+
         Fs.readdirSync(__dirname + '/models').filter(function(model) {
             return model.split('.').pop() === "js";
         }).map(function(model) {
-            that.model[model.split('.').shift()] = require('./models/' + model).call(that, Mongoose);
+            that.model[model.split('.').shift()] = require('./models/' + model).call(that, Mongoose, Elastic);
         });
 
         return done();
     });
+};
+
+/**
+ *  Query elastic for items
+ */
+Models.prototype.searchItems = function (query, done) {
+    return Elastic.search({
+        index: 'gsi',
+        body: query
+    }, done);
 };
 
 /**
