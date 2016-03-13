@@ -9,11 +9,6 @@
           "bool": {
             "must": [
               {
-                "term": {
-                  "enabled": true
-                }
-              },
-              {
                 "terms": {
                   "types": [
                     "gif",
@@ -114,9 +109,6 @@
         },
         "_sort": {
           "type": "date"
-        },
-        "enabled": {
-          "type": "boolean"
         },
         "title": {
           "type": "string",

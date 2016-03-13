@@ -60,6 +60,7 @@ internals.indexIntoElastic = function (item, next) {
     delete body._id;
     delete body.__v;
     delete body.search;
+    delete body.enabled;
 
     var elasticSearchObject = {
         index: 'gsi',
@@ -86,11 +87,18 @@ internals.updateIntoElastic = function (item, next) {
         return internals.deleteFromElastic(item, next);
     }
 
+    var body = item.toObject();
+
+    delete body._id;
+    delete body.__v;
+    delete body.search;
+    delete body.enabled;
+
     var elasticSearchObject = {
         index: 'gsi',
         type: 'items',
-        id : item._id,
-        body: item
+        id : item._id.toString(),
+        body: body
     };
 
     return Elastic.index(elasticSearchObject, function (err) {
