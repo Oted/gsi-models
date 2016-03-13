@@ -2,11 +2,10 @@
  *  The item model this is an extension of the Models object
  */
 module.exports = function(Mongoose) {
-    var that = this;
-
     var itemSchema = new Mongoose.Schema({
         title       : { type : String },
         _hash       : { type : String, unique : true },
+        _unhash     : { type : String },
         type        : { type: String },
         es_query    : { type : Mongoose.Schema.Types.Mixed, required : 'es_query is required.'},
         owner       : { type : String },
