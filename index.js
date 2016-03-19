@@ -20,12 +20,19 @@ var internals = {
         'other'
     ],
     'category_types' : [
-        'documentary',
+        'inspiring',
         'sport',
+        'nostalgic',
         'music',
-        'art',
-        'amusing',
+        'documentary',
+        'fails',
+        'science',
+        'creative',
+        'funny',
+        'gaming',
         'creepy',
+        'beautiful',
+        'rection',
         'news'
     ]
 };

@@ -16,7 +16,7 @@ module.exports = function(Mongoose, elastic) {
         data        : { type : Mongoose.Schema.Types.Mixed, required : 'Data is required.' },
         score       : { type : Number, default : 0 },
         type        : { type : String, enum: that.getItemTypes()},
-        category    : { type : String, enum: that.getItemCategories()},
+        category    : { type : String, lowercase : true, default : 'none' },
         source_type : { type : String, lowercase : true, default : 'none' },
         author      : { type : String, lowercase : true, default : 'none' },
         likes       : { type : Number, default : 0 },
