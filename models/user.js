@@ -12,7 +12,7 @@ module.exports = function(Mongoose) {
         queries         : { type : Array, default : [] },
         name            : { type : String, default : 'user' },
         subscriptions   : { type : Array, default : [] }
-    }).plugin(require('mongoose-times');
+    }).plugin(require('mongoose-times'));
 
     return Mongoose.model('User', userSchema);
 };
