@@ -13,7 +13,7 @@ module.exports = function(Mongoose) {
         enabled         : { type : Boolean, default : true },
         queried         : { type : Number, default : 0 },
         results         : { type : Number, default : 0 }
-    }).plugin(require('mongoose-times'));
+    }, {minimize: false}).plugin(require('mongoose-times'));
 
     return Mongoose.model('Query', itemSchema);
 };
