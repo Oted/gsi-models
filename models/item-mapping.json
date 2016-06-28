@@ -1,58 +1,53 @@
 {
-  "query": {
-    "query": {
-      "bool": {
-        "must": [],
-        "must_not": [],
-        "should": [],
-        "filter": {
-          "bool": {
-            "must": [
-              {
-                "terms": {
-                  "types": [
-                    "gif",
-                    "img"
-                  ]
-                }
-              },
-              {
-                "range": {
-                  "_sort": {
-                    "gte": 42352,
-                    "lte": 54264
-                  }
-                }
-              },
-              {
-                "simple_query_string": {
-                  "query": "\"fried eggs\" +(eggplant | potato) -frittata",
-                  "analyzer": "snowball",
-                  "fields": [
-                    "body^5",
-                    "_all"
-                  ],
-                  "default_operator": "and"
-                }
-              }
-            ]
-          }
-        }
-      }
-    },
-    "sort": "_sort",
-    "size": 3,
-    "_source": {
-      "exclude": [
-        "suggest",
-        "pid",
-        "primary_category",
-        "secondary_category",
-        "region",
-        "interactions"
-      ]
-    }
+ "sort": {
+  "_sort": {
+   "order": "desc"
   }
+ },
+ "query": {
+  "bool": {
+   "must": [],
+   "must_not": [],
+   "should": [],
+   "filter": {
+    "bool": {
+     "must": [
+      {
+       "terms": {
+        "type": [
+         "gif",
+         "img",
+         "soundcloud",
+         "twitch",
+         "video",
+         "vimeo",
+         "youtube"
+        ]
+       }
+      },
+      {
+       "range": {
+        "_sort": {
+         "lt": 1458832546082
+        }
+       }
+      }
+     ]
+    }
+   }
+  }
+ },
+ "_source": {
+  "exclude": [
+   "ip",
+   "token",
+   "scraped",
+   "likes",
+   "dislikes",
+   "score"
+  ]
+ },
+ "size": 20
 }
 
 {

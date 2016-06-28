@@ -9,26 +9,26 @@ module.exports = function(Mongoose, elastic) {
     Elastic = elastic;
 
     var itemSchema = new Mongoose.Schema({
-        _hash       : { type : String, unique : true },
-        _sort       : { type : Number, required : true },
-        title       : { type : String, trim : true },
-        source      : { type : String },
-        data        : { type : Mongoose.Schema.Types.Mixed, required : 'Data is required.' },
-        score       : { type : Number, default : 0 },
-        type        : { type : String, enum: that.getItemTypes()},
-        category    : { type : String, lowercase : true, default : 'none' },
-        source_type : { type : String, lowercase : true, default : 'none' },
-        author      : { type : String, lowercase : true, default : 'none' },
-        likes       : { type : Number, default : 0 },
-        dislikes    : { type : Number, default : 0 },
-        ip          : { type : String, default : null },
-        _token      : { type : String, default : null },
-        sfw         : { type : Boolean, default : true },
-        scraped     : { type : Boolean, default : false },
-        enabled     : { type : Boolean, default : true },
-        views       : { type : Number, default : 0 },
-        fragments   : { type : Array, default : [] },
-        dimensions  : { type : Mongoose.Schema.Types.Mixed }
+        _hash           : { type : String, unique : true },
+        _sort           : { type : Number, required : true },
+        title           : { type : String, trim : true },
+        source          : { type : String },
+        data            : { type : Mongoose.Schema.Types.Mixed, required : 'Data is required.' },
+        score           : { type : Number, default : 0 },
+        type            : { type : String, enum: that.getItemTypes()},
+        category        : { type : String, lowercase : true, default : 'none' },
+        source_type     : { type : String, lowercase : true, default : 'none' },
+        author          : { type : String, lowercase : true, default : 'none' },
+        likes           : { type : Number, default : 0 },
+        dislikes        : { type : Number, default : 0 },
+        ip              : { type : String, default : null },
+        _token          : { type : String, default : null },
+        sfw             : { type : Boolean, default : true },
+        scraped         : { type : Boolean, default : false },
+        enabled         : { type : Boolean, default : true },
+        views           : { type : Number, default : 0 },
+        fragments       : { type : Array, default : [] },
+        dimensions      : { type : Mongoose.Schema.Types.Mixed }
     }).plugin(require('mongoose-times'));
 
     //after save, add to ES
